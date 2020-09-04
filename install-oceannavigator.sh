@@ -78,6 +78,9 @@ else
    git clone https://github.com/DFO-Ocean-Navigator/dorval.git ${LOCATION}/.tmp/dorval
    mv ${LOCATION}/.tmp/dorval/configs/datasetconfig.json ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/datasetconfig.json
 
+   printf "Creating a cache directory.\n"
+   mkdir -p ${LOCATION}/cache/oceannavigator
+
    printf "Updating the %s configuration file.\n" ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
    printf "DEBUG = True\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
    printf "CACHE_DIR = \"${LOCATION}/cache/oceannavigator\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
