@@ -93,7 +93,7 @@ else
    printf "CLASS4_FNAME_PATTERN = \"/home/sdfo504/ocean-nav/data/class4/%s/%s.nc\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
    printf "CLASS4_PATH = \"/home/sdfo504/ocean-data/data/class4\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
    printf "OBSERVATION_AGG_URL = \"http://navigator.oceansdata.ca:8080/thredds/dodsC/Misc/observations/aggregated.ncml\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "ETOPO_FILE = \"/home/sdfo504/ocean-nav/data/misc/etopo_%s_z%d.nc\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
+   echo 'ETOPO_FILE = "/home/sdfo504/ocean-nav/data/misc/etopo_r%s_z%d.nc"' >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
    printf "SHAPE_FILE_DIR = \"/home/sdfo504/ocean-nav/data/misc/shapes\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
    printf "SQLALCHEMY_DATABASE_URI = \"mysql://nav-read:Z*E92oCqS9J9@127.0.0.1/navigator\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
    printf "SQLALCHEMY_ECHO = False\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
