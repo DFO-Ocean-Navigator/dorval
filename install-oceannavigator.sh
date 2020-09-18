@@ -62,6 +62,9 @@ else
    printf "export NVM_DIR=\"LOCATION/tools/nvm\"\n" >> ${LOCATION}/conf/onav-env.sh
    printf "[ -s \"\$NVM_DIR/nvm.sh\" ] && \\. \"\$NVM_DIR/nvm.sh\"  # This loads nvm\n" >> ${LOCATION}/conf/onav-env.sh
    printf "[ -s \"\$NVM_DIR/bash_completion\" ] && \\. \"\$NVM_DIR/bash_completion\"  # This loads nvm bash_completion\n" >> ${LOCATION}/conf/onav-env.sh
+   printf "\n" >> ${LOCATION}/conf/onav-env.sh
+   echo "export PATH=${LOCATION}/tools/yarn/bin:\$PATH" >> ${LOCATION}/conf/onav-env.sh
+   echo "export PATH=${LOCATION}/tools/bower/bin:\$PATH" >> ${LOCATION}/conf/onav-env.sh
 
 fi
 
@@ -74,37 +77,19 @@ else
    git clone https://github.com/DFO-Ocean-Navigator/Ocean-Data-Map-Project.git ${LOCATION}/Ocean-Data-Map-Project
    
    printf "Bringing in a site specific configuration file for Dorval.\n"
-   mkdir ${LOCATION}/.tmp/dorval
-   git clone https://github.com/DFO-Ocean-Navigator/dorval.git ${LOCATION}/.tmp/dorval
-   mv ${LOCATION}/.tmp/dorval/configs/datasetconfig.json ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/datasetconfig.json
+   cd ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs
+   git checkout dorval
 
    printf "Creating a cache directory.\n"
    mkdir -p ${LOCATION}/cache/oceannavigator
 
-   printf "Updating the %s configuration file.\n" ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "DEBUG = True\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "CACHE_DIR = \"${LOCATION}/cache/oceannavigator\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "TILE_CACHE_DIR = \"/home/sdfo504/cache/oceannavigator/tiles\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "BATHYMETRY_FILE = \"/home/sdfo504/ocean-nav/data/misc/ETOPO1_Bed_g_gmt4.grd\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "OVERLAY_KML_DIR = \"./kml\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "DRIFTER_AGG_URL = \"http://navigator.oceansdata.ca:8080/thredds/dodsC/Drifter/aggregated.ncml\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "DRIFTER_URL = \"http://navigator.oceansdata.ca:8080/thredds/dodsC/Drifter/%s.nc\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "DRIFTER_CATALOG_URL = \"http://navigator.oceansdata.ca:8080/thredds/catalog/Drifter/catalog.xml\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "CLASS4_FNAME_PATTERN = \"/home/sdfo504/ocean-nav/data/class4/%s/%s.nc\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "CLASS4_PATH = \"/home/sdfo504/ocean-data/data/class4\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "OBSERVATION_AGG_URL = \"http://navigator.oceansdata.ca:8080/thredds/dodsC/Misc/observations/aggregated.ncml\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   echo 'ETOPO_FILE = "/home/sdfo504/ocean-nav/data/misc/etopo_r%s_z%d.nc"' >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "SHAPE_FILE_DIR = \"/home/sdfo504/ocean-nav/data/misc/shapes\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "SQLALCHEMY_DATABASE_URI = \"mysql://nav-read:Z*E92oCqS9J9@127.0.0.1/navigator\"\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "SQLALCHEMY_ECHO = False\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "SQLALCHEMY_TRACK_MODIFICATIONS = False\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   printf "SQLALCHEMY_POOL_RECYCLE = 50\n" >> ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
+   printf "Adjusting the %s configuration file.\n" ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
+   sed -i "s/\/home\/sdfo504\/cache\/oceannavigator/${LOCATION}\/cache\/oceannavigator/" ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
+   sed -i "s/\/home\/sdfo504\/cache\/oceannavigator\/tiles/${LOCATION}\/cache\/oceannavigator\/tiles/" ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
 
-   printf "\nWhat SHELL environment are you using so that we may configure conda?\n"
-   printf "Your choice is one of bash, fish, tcsh, xonsh, zsh, or powershell.\n"
-   printf "\nTo find out what SHELL your using in a seperate terminal window run\n"
-   printf "the command \"echo \$SHELL\" and use the returned value for your\n"
-   printf "particular environment.\n\n"
+   printf "In order to configure your account to work with conda we need to know what\n"
+   printf "shell you are using. Your choices are bash, fish, tcsh, xonsh, zsh, or\n"
+   printf " powershell.\n"
    read SHELL_NAME
    printf "\n\n"
    conda init ${SHELL_NAME}
