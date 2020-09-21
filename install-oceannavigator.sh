@@ -84,8 +84,11 @@ else
    mkdir -p ${LOCATION}/cache/oceannavigator
 
    printf "Adjusting the %s configuration file.\n" ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   sed -i "s/\/home\/sdfo504\/cache\/oceannavigator/${LOCATION}\/cache\/oceannavigator/" ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-   sed -i "s/\/home\/sdfo504\/cache\/oceannavigator\/tiles/${LOCATION}\/cache\/oceannavigator\/tiles/" ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
+   git clone https://github.com/DFO-Ocean-Navigator/dorval.git ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs
+   cd ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs
+   git checkout dorval
+   cd -
+   sed -i "s/LOCATION/${LOCATION}/" ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
 
    printf "In order to configure your account to work with conda we need to know what\n"
    printf "shell you are using. Your choices are bash, fish, tcsh, xonsh, zsh, or\n"
@@ -94,19 +97,18 @@ else
    printf "\n\n"
    conda init ${SHELL_NAME}
 
-   printf "\n\nConfiguring the CONDA Python environments.\n"
+   printf "\n\nInstalling aand configuring the CONDA Python environments.\n"
    conda create --quiet --name navigator --file ${LOCATION}/Ocean-Data-Map-Project/config/conda/navigator-spec-file.txt
-   awk '!/openssl/' ${LOCATION}/Ocean-Data-Map-Project/config/conda/index-tool-spec-file.txt > ${LOCATION}/Ocean-Data-Map-Project/config/conda/index-tool-spec-file.modified
-   mv ${LOCATION}/Ocean-Data-Map-Project/config/conda/index-tool-spec-file.modified ${LOCATION}/Ocean-Data-Map-Project/config/conda/index-tool-spec-file.txt
    conda create --quiet --name index-tool --file ${LOCATION}/Ocean-Data-Map-Project/config/conda/index-tool-spec-file.txt
    conda create --quiet --name nco-tools --file ${LOCATION}/Ocean-Data-Map-Project/config/conda/nco-tools-spec-file.txt
 
    printf "\nDownloading the NVM software in order to install Node.\n"
    git clone https://github.com/nvm-sh/nvm.git ${LOCATION}/tools/nvm
-   export NVM_DIR="${LOCATION}/tools/nvm"
-   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
-   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-   nvm install v8.16.0
+   printf "export NVM_DIR=\"${LOCATION}/tools/nvm\"\n" >> ${HOME}/.bashrc
+   printf "[ -s "$NVM_DIR/nvm.sh" ] && \. \"$NVM_DIR/nvm.sh\"" >> ${HOME}.bashrc 
+   printf "[ -s "$NVM_DIR/bash_completion" ] && \. \"$NVM_DIR/bash_completion\"" >> ${HOME}/.bashrc
+   source .bashrc
+   bash -c "nvm install v8.16.0"
 
    printf "\nDownloading YARN and unbundling the tarball and moving it to %s.\n" ${LOCATION}/tools/yarn
    wget --quiet -O ${LOCATION}/.tmp/yarn-v1.22.5.tar.gz http://navigator.oceansdata.ca/yarn/yarn-v1.22.5.tar.gz
@@ -115,7 +117,7 @@ else
    export PATH=${LOCATION}/tools/yarn/bin:${PATH}
 
    printf "\nDownloading and installing BOWER.\n"
-   yarn global add bower --prefix ${LOCATION}/tools/bower
+   yarn global add bower --prefix ${LOCATION}/tools/bower --global-folder 
    export PATH=${LOCATION}/tools/bower/bin:${PATH}
 
    printf "\nCompiling the Javascript frontend of the Ocean Navigator.\n"
