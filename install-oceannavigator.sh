@@ -84,15 +84,8 @@ else
    rm -rf ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs 
    git clone https://github.com/DFO-Ocean-Navigator/dorval.git ${LOCATION}/.tmp/dorval
    mv ${LOCATION}/.tmp/dorval/configs ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs
-   sed -i 's/LOCATION/${LOCATION}/' ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
-
-   printf "\nIn order to configure your account to work with conda we need to know what\n"
-   printf "shell you are using. Your choices are bash, fish, tcsh, xonsh, zsh, or\n"
-   printf "powershell.\n"
-   printf "\nONAV-installer> "
-   read SHELL_NAME
-   printf "\n"
-   conda init ${SHELL_NAME}
+   MODIFIED_LOCATION=$(echo ${LOCATION} | sed 's#/#\\/#g')
+   sed -i "s/LOCATION/$(echo $MODIFIED_LOCATION)/" ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/configs/oceannavigator.cfg
 
    printf "\nInstalling and configuring the CONDA Python environments.\n"
    conda create --quiet --name navigator --file ${LOCATION}/Ocean-Data-Map-Project/config/conda/navigator-spec-file.txt
@@ -101,12 +94,7 @@ else
 
    printf "\nDownloading the NVM software in order to install Node.\n"
    git clone https://github.com/nvm-sh/nvm.git ${LOCATION}/tools/nvm
-   printf "export NVM_DIR=\"${LOCATION}/tools/nvm\"\n" >> ${HOME}/.bashrc
-   printf '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"\n' >> ${HOME}/.bashrc 
-   printf '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"\n' >> ${HOME}/.bashrc
-   printf "export PATH=${LOCATION}/tools/bower/bin:${PATH}" >> ${HOME}/.bashrc
-   printf "export PATH=${LOCATION}/tools/bower/bin:${PATH}">> ${HOME}/.bashrc
-   bash -c "source ${HOME}/.bashrc ; nvm install v8.16.0"
+   bash -c "source ${LOCATION}/conf/onav-env.sh ; nvm install v8.16.0"
 
    printf "\nDownloading YARN and unbundling the tarball and moving it to %s.\n" ${LOCATION}/tools/yarn
    wget --quiet -O ${LOCATION}/.tmp/yarn-v1.22.5.tar.gz http://navigator.oceansdata.ca/yarn/yarn-v1.22.5.tar.gz
@@ -115,25 +103,21 @@ else
    export PATH=${LOCATION}/tools/yarn/bin:${PATH}
 
    printf "\nDownloading and installing BOWER.\n"
-   bash -c "source ${HOME}/.bashrc ; yarn global add bower --prefix ${LOCATION}/tools/bower"
+   bash -c "source ${LOCATION}/conf/onav-env.sh ; yarn global add bower --prefix ${LOCATION}/tools/bower --global-folder ${LOCATION}/tools"
    export PATH=${LOCATION}/tools/bower/bin:${PATH}
 
    printf "\nCompiling the Javascript frontend of the Ocean Navigator.\n"
    cd ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/frontend
-   bash -c "source ${HOME}/.bashrc ; yarn install ; yarn build"
+   bash -c "source ${LOCATION}/conf/onav-env.sh ; yarn install ; yarn build"
    cd -
 
-   printf "\nDownloading the indexing toolchain to %s.\n" ${LOCATION}/netcdf-timestamp-mapper
-   mkdir ${LOCATION}/netcdf-timestamp-mapper
-   git clone https://github.com/DFO-Ocean-Navigator/netcdf-timestamp-mapper.git ${LOCATION}/netcdf-timestamp-mapper
-   cd ${LOCATION}/netcdf-timestamp-mapper
-   git submodule update --init --recursive
-   bash -c "source ${HOME}/.bashrc ; conda activate index-tool ; make"
-   bash -c "source ${HOME}/.bashrc ; conda activate navigator ; pip install defopt ; pip install visvalingamwyatt"
+   printf "\nWe require two additiona; Python packages where are only availble\n"
+   printf "via pip.\n"
+   bash -c "source ${LOCATION}/conf/onav-env.sh ; conda activate navigator ; pip install defopt ; pip install visvalingamwyatt"
 
-   printf "Ocean Navigator environment configuration file by running the command...\n"
-   printf "\tsource ${LOCATION}/conf/onav-env.sh\n" 
-   printf "Change your working directory to ${LOCATION}/Ocean-Data-Map-Project and launch\n"
-   printf "the Ocean Navigator web services by issuing the following command;\n"
-   printf "\t./launch-web-service.sh\n"
+   printf "\nOcean Navigator environment configuration file by running the command...\n"
+   printf "\n\tsource ${LOCATION}/conf/onav-env.sh\n" 
+   printf "\nChange your working directory to ${LOCATION}/Ocean-Data-Map-Project and launch\n"
+   printf "\nthe Ocean Navigator web services by issuing the following command;\n"
+   printf "\n\t./Ocean-Data-Map-Project/launch-web-service.sh\n"
 fi
