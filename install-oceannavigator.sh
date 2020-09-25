@@ -40,32 +40,32 @@ else
    mkdir -p ${LOCATION}/conf
 fi
 
-if [ -e ${LOCATION}/conf/onav-env.sh ] ; then
+if [ -e ${LOCATION}/conf/ocean-navigator-env.sh ] ; then
    printf "\nAn instance of the Ocean Navigator exists. Exiting!\n"
    exit 1
 else
-   printf "\nSetting up an Ocean Navigator SHELL environment file located at %s.\n" ${LOCATION}/conf/onav-env.sh
-   printf "# >>> conda initialize >>>\n" >> ${LOCATION}/conf/onav-env.sh
-   printf "# !! Contents within this block are managed by \'conda init\' !!\n" >> ${LOCATION}/conf/onav-env.sh
-   printf "__conda_setup=\"\$(\'$(printf ${LOCATION})/tools/miniconda/3/amd64/bin/conda\' \'shell.bash\' \'hook\' 2> /dev/null)\"\n" >> ${LOCATION}/conf/onav-env.sh
-   printf "if [ \$? -eq 0 ]; then\n" >> ${LOCATION}/conf/onav-env.sh
-   printf " eval \"\$__conda_setup\"\n" >> ${LOCATION}/conf/onav-env.sh
-   printf "else\n" >> ${LOCATION}/conf/onav-env.sh
-   printf " if [ -f \"$(printf ${LOCATION})/tools/miniconda/3/amd64/etc/profile.d/conda.sh\" ] ; then\n" >> ${LOCATION}/conf/onav-env.sh
-   printf "     . \"$(printf ${LOCATION})/tools/miniconda/3/amd64/etc/profile.d/conda.sh\"\n" >> ${LOCATION}/conf/onav-env.sh
-   printf " else\n" >> ${LOCATION}/conf/onav-env.sh
-   printf "     export PATH=\"$(printf ${LOCATION})/tools/miniconda/3/amd64/bin:\$PATH\"\n" >> ${LOCATION}/conf/onav-env.sh
-   printf " fi\n" >> ${LOCATION}/conf/onav-env.sh
-   printf "fi\n" >>${LOCATION}/conf/onav-env.sh
-   printf "unset __conda_setup\n" >> ${LOCATION}/conf/onav-env.sh
-   printf "# <<< conda initialize <<<\n\n" >> ${LOCATION}/conf/onav-env.sh
-   printf "conda activate navigator\n\n" >> ${LOCATION}/conf/onav-env.sh
-   printf "export NVM_DIR=\"${LOCATION}/tools/nvm\"\n" >> ${LOCATION}/conf/onav-env.sh
-   printf '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"\n' >> ${LOCATION}/conf/onav-env.sh
-   printf '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"\n' >> ${LOCATION}/conf/onav-env.sh
-   printf "\n" >> ${LOCATION}/conf/onav-env.sh
-   echo "export PATH=${LOCATION}/tools/yarn/bin:\$PATH" >> ${LOCATION}/conf/onav-env.sh
-   echo "export PATH=${LOCATION}/tools/bower/bin:\$PATH" >> ${LOCATION}/conf/onav-env.sh
+   printf "\nSetting up an Ocean Navigator SHELL environment file located at %s.\n" ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "# >>> conda initialize >>>\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "# !! Contents within this block are managed by \'conda init\' !!\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "__conda_setup=\"\$(\'$(printf ${LOCATION})/tools/miniconda/3/amd64/bin/conda\' \'shell.bash\' \'hook\' 2> /dev/null)\"\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "if [ \$? -eq 0 ]; then\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf " eval \"\$__conda_setup\"\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "else\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf " if [ -f \"$(printf ${LOCATION})/tools/miniconda/3/amd64/etc/profile.d/conda.sh\" ] ; then\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "     . \"$(printf ${LOCATION})/tools/miniconda/3/amd64/etc/profile.d/conda.sh\"\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf " else\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "     export PATH=\"$(printf ${LOCATION})/tools/miniconda/3/amd64/bin:\$PATH\"\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf " fi\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "fi\n" >>${LOCATION}/conf/ocean-navigator-env.sh
+   printf "unset __conda_setup\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "# <<< conda initialize <<<\n\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "conda activate navigator\n\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "export NVM_DIR=\"${LOCATION}/tools/nvm\"\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"\n' >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"\n' >> ${LOCATION}/conf/ocean-navigator-env.sh
+   printf "\n" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   echo "export PATH=${LOCATION}/tools/yarn/bin:\$PATH" >> ${LOCATION}/conf/ocean-navigator-env.sh
+   echo "export PATH=${LOCATION}/tools/bower/bin:\$PATH" >> ${LOCATION}/conf/ocean-navigator-env.sh
 
 fi
 
@@ -94,7 +94,7 @@ else
 
    printf "\nDownloading the NVM software in order to install Node.\n"
    git clone https://github.com/nvm-sh/nvm.git ${LOCATION}/tools/nvm
-   bash -c "source ${LOCATION}/conf/onav-env.sh ; nvm install v8.16.0"
+   bash -c "source ${LOCATION}/conf/ocean-navigator-env.sh ; nvm install v8.16.0"
 
    printf "\nDownloading YARN and unbundling the tarball and moving it to %s.\n" ${LOCATION}/tools/yarn
    wget --quiet -O ${LOCATION}/.tmp/yarn-v1.22.5.tar.gz http://navigator.oceansdata.ca/yarn/yarn-v1.22.5.tar.gz
@@ -103,21 +103,28 @@ else
    export PATH=${LOCATION}/tools/yarn/bin:${PATH}
 
    printf "\nDownloading and installing BOWER.\n"
-   bash -c "source ${LOCATION}/conf/onav-env.sh ; yarn global add bower --prefix ${LOCATION}/tools/bower --global-folder ${LOCATION}/tools"
+   bash -c "source ${LOCATION}/conf/ocean-navigator-env.sh ; yarn global add bower --prefix ${LOCATION}/tools/bower --global-folder ${LOCATION}/tools"
    export PATH=${LOCATION}/tools/bower/bin:${PATH}
 
    printf "\nCompiling the Javascript frontend of the Ocean Navigator.\n"
    cd ${LOCATION}/Ocean-Data-Map-Project/oceannavigator/frontend
-   bash -c "source ${LOCATION}/conf/onav-env.sh ; yarn install ; yarn build"
+   bash -c "source ${LOCATION}/conf/ocean-navigator-env.sh ; yarn install ; yarn build"
    cd -
 
    printf "\nWe require two additiona; Python packages where are only availble\n"
    printf "via pip.\n"
-   bash -c "source ${LOCATION}/conf/onav-env.sh ; conda activate navigator ; pip install defopt ; pip install visvalingamwyatt"
+   bash -c "source ${LOCATION}/conf/ocean-navigator-env.sh ; conda activate navigator ; pip install defopt ; pip install visvalingamwyatt"
+
+   printf "\nCloning the indexing tool and compiling\n"
+   git clone https://github.com/DFO-Ocean-Navigator/netcdf-timestamp-mapper.git ${LOCATION}/netcdf-timestamp-mapper
+   cd ${LOCATION}/netcdf-timestamp-mapper
+   git submodule update --init --recursive
+   make
+   cd -
 
    printf "\nOcean Navigator environment configuration file by running the command...\n"
-   printf "\n\tsource ${LOCATION}/conf/onav-env.sh\n" 
+   printf "\n\tsource ${LOCATION}/conf/ocean-navigator-env.sh\n" 
    printf "\nChange your working directory to ${LOCATION}/Ocean-Data-Map-Project and launch\n"
    printf "\nthe Ocean Navigator web services by issuing the following command;\n"
-   printf "\n\t./Ocean-Data-Map-Project/launch-web-service.sh\n"
+   printf "\n\t./launch-web-service.sh\n"
 fi
