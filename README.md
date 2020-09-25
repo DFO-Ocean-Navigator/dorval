@@ -1,6 +1,21 @@
 # dorval
 This is a site specific repo.
 
+## How to install and launch the Ocean Navigator web services
+ 1. Clone the dorval repository;
+ 
+    ```git clone https://github.com/DFO-Ocean-Navigator/dorval.git```
+
+2. Launch the install script by running the command;
+
+   ```bash install-oceannavigator.sh```
+   
+3. You'll be asked for a location to install the Ocean Navigator software. Please be sure to have at least 5GB of space available. Once you have provided the location press the *enter* key.
+
+4. Once the installation has completed you will be given an environment script to source in order to configure your Linux user account environment and how to start the Ocean Navigator web services.
+
+5. Upon a successful launch you will be provided with an IP and port number which you will use to configure port forwarding to your local desktop. At which point you type in the URL of *localhost:5000*.
+
 ## How to index a local or remotely accessible dataset for the Ocean Navigator
  1. Change your present working directory to netcdf-timestamp-mapper.
  
