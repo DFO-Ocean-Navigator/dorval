@@ -50,7 +50,14 @@ This is a site specific repo.
            "votemper": { "name": "Temperature", "envtype": "ocean", "unit": "Celsius", "scale": [-5, 30], "equation": "votemper - 273.15", "dims": ["time", "depth", "latitude", "longitude"] },
            "vosaline": { "name": "Salinity", "envtype": "ocean", "unit": "PSU", "scale": [30, 40]}
      },
+     ```    
 
+ 5. Restart the Ocean Navigator web services by terminating all the gunicorn processes and then using the launch-web-service.sh script.
+ 
+     ```pkill -9 gunicorn```
+     
+     ```./launch-web-service.sh```
+       
  In the above example, if you were to copy and paste this into your own configuration file. The text file may break the magwatervel variable definition over two lines instead of one continuous string. This would cause the Ocean Navigator to throw an error and fail to work properly.
 
  If you are using polar stereographic datasets the lat_var_key and lon_var_key would need to be updated accordingly and if you have a grid angle file to rotate the variables to a grid. You will need to use a definition like the following;
