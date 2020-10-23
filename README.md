@@ -89,8 +89,8 @@ This is a site specific repo.
 
 If you receive a message during the installation of the Ocean Navigator like the following;
 
-
-```WARNING:
+```
+    WARNING:
     You currently have a PYTHONPATH environment variable set. This may cause
     unexpected behavior when running the Python interpreter in Miniconda3.
     For best results, please verify that your PYTHONPATH only points to
