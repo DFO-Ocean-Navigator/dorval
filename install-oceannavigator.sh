@@ -4,6 +4,13 @@ printf "\nWhere do you wish to install the Ocean Navigator software?\n\n"
 printf "ONAV-installer> "
 read LOCATION
 
+RESULT=$(echo ${LOCATION} | sed  's/^\~.*//') 
+
+if [ X"${RESULT}" = X"" ] ; then
+   printf "\n\tError. Special characters such as tilde are not permitted. Exiting!\n\n" 2>/dev/null
+   exit 1
+fi
+
 printf "\nInstalling into.... %s\n\n" ${LOCATION}
 
 if [ ! -d ${LOCATION} ] ; then 
@@ -122,9 +129,9 @@ else
    make
    cd -
 
-   printf "\nOcean Navigator environment configuration file by running the command...\n"
-   printf "\n\tsource ${LOCATION}/conf/ocean-navigator-env.sh\n" 
-   printf "\nChange your working directory to ${LOCATION}/Ocean-Data-Map-Project and launch\n"
-   printf "\nthe Ocean Navigator web services by issuing the following command;\n"
-   printf "\n\t./launch-web-service.sh\n"
+   printf "\nSetup the Ocean Navigator environment variables by using the command...\n" | tee -a ${LOCATION}/onav-installation.log
+   printf "\n\tsource ${LOCATION}/conf/ocean-navigator-env.sh\n" | tee -a ${LOCATION}/onav-installation.log
+   printf "\nChange your working directory to ${LOCATION}/Ocean-Data-Map-Project and launch\n" | tee -a ${LOCATION}/onav-installation.log
+   printf "\nthe Ocean Navigator web services by issuing the following command;\n" | tee -a ${LOCATION}/onav-installation.log
+   printf "\n\t./launch-web-service.sh\n" | tee -a ${LOCATION}/onav-installation.log
 fi
