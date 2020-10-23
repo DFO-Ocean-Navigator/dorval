@@ -7,7 +7,7 @@ read LOCATION
 RESULT=$(echo ${LOCATION} | sed  's/^\~.*//') 
 
 if [ X"${RESULT}" = X"" ] ; then
-   printf "\n\tError. Special characters such as tilda are not permitted. Exiting!\n\n" 2>/dev/null
+   printf "\n\tError. Special characters such as tilde are not permitted. Exiting!\n\n" 2>/dev/null
    exit 1
 fi
 
