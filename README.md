@@ -17,6 +17,7 @@ This is a site specific repo.
 5. Upon a successful launch you will be provided with an IP and port number. Depending on how people connect and interact with certain GPSC container resources. There are different ways to interact with the Ocean Navigator web service.
 
    a. Connect to the GPSC landing page with ThinLinc, launch a web browser, and then type in (or copy) the IP and port number into the URL address bar. 
+
    b. If using Putty or MobaXterm  which you will need to configure port forwarding to your local desktop. At which point you type in the URL address *localhost:5000* to interact with the remote web service through your local browser.
 
 ## How to index a local or remotely accessible dataset for the Ocean Navigator
