@@ -10,7 +10,7 @@ This is a site specific repo.
 
    ```bash install-oceannavigator.sh```
    
-3. You'll be asked for a location to install the Ocean Navigator software. Please be sure to have at least 5GB of space available. Once you have provided the location press the *enter* key.
+3. You'll be asked for a location to install the Ocean Navigator software. Please be sure to use either an absolute path name, or relative path name. The use of the tilda (~) character will cause the installation script to fail. You will also need to have at least 5GB of space available. Once you have provided the location information press the *enter* key.
 
 4. Once the installation has completed you will be given an environment script to source in order to configure your Linux user account environment and how to start the Ocean Navigator web services.
 
@@ -84,3 +84,18 @@ This is a site specific repo.
  You may note that the votemper variable to transformed from Kelvin to Celsius. If the dataset you are using already has this conversion. You will need to adjust the variable’s definition to the following;
 
  ```"votemper": { "name": "Temperature", "envtype": "ocean", "unit": "Celsius", "scale": [-5, 30], "dims": ["time", "depth", "latitude", "longitude"] },```
+
+# Errata
+
+If you receive a message during the installation of the Ocean Navigator like the following;
+
+
+```WARNING:
+    You currently have a PYTHONPATH environment variable set. This may cause
+    unexpected behavior when running the Python interpreter in Miniconda3.
+    For best results, please verify that your PYTHONPATH only points to
+    directories of packages that are compatible with the Python interpreter
+    in Miniconda3: ${INSTALLATION_LOCATION}/tools/miniconda/3/amd64
+```
+
+The Ocean Navigator will still work as the environment configuration file will not use the pre-existing PYTHONPATH variable. It will instead use the PATH environment variable to ensure that the Ocean Navigator installed CONDA environment and its supporting binaries and packages.
