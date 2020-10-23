@@ -10,11 +10,14 @@ This is a site specific repo.
 
    ```bash install-oceannavigator.sh```
    
-3. You'll be asked for a location to install the Ocean Navigator software. Please be sure to use either an absolute path name, or relative path name. The use of the tilda (~) character will cause the installation script to fail. You will also need to have at least 5GB of space available. Once you have provided the location information press the *enter* key.
+3. You'll be asked for a location to install the Ocean Navigator software. Please be sure to use either an absolute path name, or relative path name. The use of the tilde (~) character will cause the installation script to fail. You will also need to have at least 5GB of space available. Once you have provided the location information press the *enter* key.
 
 4. Once the installation has completed you will be given an environment script to source in order to configure your Linux user account environment and how to start the Ocean Navigator web services.
 
-5. Upon a successful launch you will be provided with an IP and port number which you will use to configure port forwarding to your local desktop. At which point you type in the URL of *localhost:5000*.
+5. Upon a successful launch you will be provided with an IP and port number. Depending on how people connect and interact with certain GPSC container resources. There are different ways to interact with the Ocean Navigator web service.
+
+   a. Connect to the GPSC landing page with ThinLinc, launch a web browser, and then type in (or copy) the IP and port number into the URL address bar. 
+   b. If using Putty or MobaXterm  which you will need to configure port forwarding to your local desktop. At which point you type in the URL address *localhost:5000* to interact with the remote web service through your local browser.
 
 ## How to index a local or remotely accessible dataset for the Ocean Navigator
  1. Change your present working directory to netcdf-timestamp-mapper.
