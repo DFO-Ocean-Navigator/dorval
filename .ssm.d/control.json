@@ -1,0 +1,7 @@
+{
+    "name": "ocean-navigator",
+    "version": "20201026",
+    "platform": "all",
+    "summary": "Ocean Navigator",
+    "description": "A fully implemented Ocean Navigator instance that a user can configure to be able to index and visualize their simulated datasets."
+}
