@@ -1,4 +1,0 @@
-[submodule "configs"]
-        path = configs
-        url = https://github.com/DFO-Ocean-Navigator/configurations.git
-        branch = dorval
