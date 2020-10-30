@@ -1,31 +1,29 @@
 # dorval
 This is a site specific repo.
 
-## How to install and launch the Ocean Navigator web services
+## How to install and launch the Ocean Navigator web services in your ${HOME} directory
  1. Clone the dorval repository;
  
     ```git clone https://github.com/DFO-Ocean-Navigator/dorval.git```
 
-2. Launch the install script by running the command;
+2. Change your current working directory to the dorval directory;
 
-   ```bash install-oceannavigator.sh```
+   ```cd dorval```
    
-3. You'll be asked for a location to install the Ocean Navigator software. Please be sure to use either an absolute path name, or relative path name. The use of the tilde (~) character will cause the installation script to fail. You will also need to have at least 5GB of space available. Once you have provided the location information press the *enter* key.
+3. Run the command `./bin/run-ocean-navigator` to perform an initial configuratioan, alter your current shell environment variables, and launch the Ocean Navigator web services.
 
-4. Once the installation has completed you will be given an environment script to source in order to configure your Linux user account environment and how to start the Ocean Navigator web services.
-
-5. Upon a successful launch you will be provided with an IP and port number. Depending on how people connect and interact with certain GPSC container resources. There are different ways to interact with the Ocean Navigator web service.
+4. Upon a successful launch you will be provided with an IP and port number. Depending on how people connect and interact with certain GPSC container resources. There are different ways to interact with the Ocean Navigator web service.
 
    a. Connect to the GPSC landing page with ThinLinc, launch a web browser, and then type in (or copy) the IP and port number into the URL address bar. 
 
-   b. If using Putty or MobaXterm  which you will need to configure port forwarding to your local desktop. At which point you type in the URL address *localhost:5000* to interact with the remote web service through your local browser.
+   b. If using Putty or MobaXterm you will need to configure port forwarding to your local desktop. At which point you type in the URL address *localhost:5000* to interact with the remote web service through your local browser.
 
 ## How to index a local or remotely accessible dataset for the Ocean Navigator
- 1. Change your present working directory to netcdf-timestamp-mapper.
+ 1. Change your present working directory to tools/netcdf-timestamp-mapper.
  
- 2. Activate the index-tool conda virtual environment in order to setup your Linux environment variables.
+ 2. Activate the index-tool conda virtual environment in order to setup your Linux environment variables. The command is `conda activate index-tool`.
  
- 3. You can the run the command “./build/nc-timestamp-mapper --help” to see what options are available.
+ 3. You can the run the command `nc-timestamp-mapper --help` to see what options are available.
  
     For the purpose of this exercise. I will assume that there exists a local directory structure like “/data/dd.weather.gc.ca/model_giops/netcdf/lat_lon/2d/”. It contains subdirectories called {000, 003, …, 240} and in turn contain the various NetCDF files from ECCC.  We are only interested in indexing the 00 and 12 run time simulations to create a view of a 24 hour time period and saving the database in your home directory.
  4. We will need to generate a list of filenames matching the aforementioned criteria in order to instruct the nc-timestamp-mapper binary of what we wish to be included in the SQLite3 database. We’ll use the Linux find command and redirect its output to a text file. The command is,
@@ -34,12 +32,12 @@ This is a site specific repo.
    
  5. The command to create this unique index is;
  
-    ```./build/nc-timestamp-mapper -i /data/dd.weather.gc.ca/model_giops/netcdf/lat_lon/2d -n giops-2d-latlon -o ${HOME}/db --file-list giops-2d-latlon.txt -h```
+    ```nc-timestamp-mapper -i /data/dd.weather.gc.ca/model_giops/netcdf/lat_lon/2d -n giops-2d-latlon -o ${HOME}/db --file-list giops-2d-latlon.txt -h```
   
     When the command is executed, you will be informed how many files will be indexed and a progress bar will be shown letting you now when it has completed
 
 ## How to update the Ocean Navigator datasetconfig.json file
- 1. Change your current working directory to “[…]/Ocean-Data-Map-Project/oceannavigator/configs”. Replace the string “[…]” with the fully or relative path of your Ocean Navigator instance.
+ 1. Change your current working directory to `[…]/Ocean-Data-Map-Project/oceannavigator/configs`. Replace the string “[…]” with the fully or relative path of your Ocean Navigator instance.
  
  2. Access the header information of a NetCDF file in order to determine what variables it contains along with grid dimensions and time definitions to name a few items of interest. This can be accomplished by activating the nco-tools conda environment and using the ncdump command with the “-h” option.
  
@@ -75,7 +73,7 @@ This is a site specific repo.
  
      ```pkill -9 gunicorn```
      
-     ```./launch-web-service.sh```
+     ```dorval/bin/run-ocean-navigator```
        
  In the above example, if you were to copy and paste this into your own configuration file. The text file may break the magwatervel variable definition over two lines instead of one continuous string. This would cause the Ocean Navigator to throw an error and fail to work properly.
 
