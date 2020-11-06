@@ -2,17 +2,21 @@
 This is a site specific repo.
 
 ## How to install and launch the Ocean Navigator web services in your ${HOME} directory
- 1. Clone the dorval repository;
+1. Ensure your current working directory is ${HOME}
+
+    ```cd ${HOME}```
+
+2. Clone the dorval repository;
  
-    ```git clone https://github.com/DFO-Ocean-Navigator/dorval.git```
+    ```git clone https://github.com/DFO-Ocean-Navigator/dorval.git ${HOME}/dorval```
 
-2. Change your current working directory to the dorval directory;
+3. Change your current working directory to the dorval directory;
 
-   ```cd dorval```
+   ```cd ${HOME}/dorval```
    
-3. Run the command `./bin/run-ocean-navigator` to perform an initial configuratioan, alter your current shell environment variables, and launch the Ocean Navigator web services.
+4. Run the command `./bin/run-ocean-navigator` to perform an initial configuratioan, alter your current shell environment variables, and launch the Ocean Navigator web services.
 
-4. Upon a successful launch you will be provided with an IP and port number. Depending on how people connect and interact with certain GPSC container resources. There are different ways to interact with the Ocean Navigator web service.
+5. Upon a successful launch you will be provided with an IP and port number. Depending on how people connect and interact with certain GPSC container resources. There are different ways to interact with the Ocean Navigator web service.
 
    a. Connect to the GPSC landing page with ThinLinc, launch a web browser, and then type in (or copy) the IP and port number into the URL address bar. 
 
